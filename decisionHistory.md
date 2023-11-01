@@ -1,5 +1,11 @@
 ## 1 November 2023
 
+### Deciding Backend Tech Stack
+
+-   I want to learn and use FastAPI in this project, so will be using that here. 
+
+-   For Development workflow, will use poetry to track package dependencies.
+
 ### Deciding Frontend Tech Stack
 
 -   I am familiar with React, so it will be easy to start with building a frontend app with that for time being. So, finalizing React, without any other considerations. 
