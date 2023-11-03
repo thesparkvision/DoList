@@ -1,3 +1,12 @@
+## 2 November 2023
+
+### Initial DB Design
+
+- Created Initial DB Design based on which I am designing the backend API Service
+- Added DB Documentation File to the codebase so it can be maintained and updated with time
+
+---
+
 ## 1 November 2023
 
 ### Deciding Backend Tech Stack
