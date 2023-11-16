@@ -3,13 +3,29 @@ Project DoList {
 }
 Table user {
     id int [pk, increment]
-    full_name varchar
+    full_name varchar [not null]
     email varchar [not null, unique]
     password varchar [not null]
     created_at datetime
     updated_at datetime
     is_active boolean [default: true]
     note: "table 'user' contains user information"
+}
+Enum token_type {
+    authentication
+    verification
+    forgot_password
+}
+Table user_token {
+    id int [pk, increment]
+    token varchar [not null, unique]
+    expiry_date datetime [not null]
+    is_valid bool [default: true]
+    user_id int [not null]
+    token_type token_type [not null]
+    created_at datetime [default: `now()`]
+    updated_at datetime
+    note: "table 'user_token' contains token information for various purposes"
 }
 Enum task_status {
   to_do
@@ -35,4 +51,5 @@ Table task {
     updated_at datetime
     note: "table 'task' contains task information"
 }
+Ref: user_token.user_id > user.id
 Ref: task.user_id > user.id  

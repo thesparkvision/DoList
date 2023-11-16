@@ -1,3 +1,12 @@
+## 17 November 2023
+
+### User Authentication, Password Recovery
+
+-   Decided to have another table to manage JWT Tokens which would be used for user login management,
+    storing password recovery tokens, etc. for short period of times.
+
+---
+
 ## 2 November 2023
 
 ### Initial DB Design
