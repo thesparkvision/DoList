@@ -20,5 +20,12 @@ def register_user(mysql_session: Session, user_detail: user_schema.UserRegisterS
 def login_user():
     pass
 
-def get_user():
-    pass
+def get_user(mysql_session: Session, user_id: int):
+    user = sql_db.get_user_by_id(mysql_session, user_id)
+    if not user:
+        raise exceptions.RecordDoesNotExist
+
+    if not user.is_active:
+        raise exceptions.RecordIsInactive
+    
+    return user

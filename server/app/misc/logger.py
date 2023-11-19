@@ -1,6 +1,6 @@
 import logging
 import uvicorn
-from app.config.settings import app_settings
+from app.misc.settings import app_settings
 
 logger = logging.root
 handler = logging.StreamHandler()

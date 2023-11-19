@@ -5,12 +5,12 @@ from app.db.sql.models import User
 
 def get_user_by_id(
     session: Session,
-    id: int
+    user_id: int
 ) -> [User, None]:
     """
         returns user object by identifying it by id
     """ 
-    user = session.query(User).filter(User.id == id).first()
+    user = session.query(User).filter(User.id == user_id).first()
     return user
 
 def get_user_by_email(

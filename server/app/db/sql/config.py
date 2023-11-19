@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from typing import Generator
 
-from app.config.settings import app_settings
+from app.misc.settings import app_settings
 
 engine = create_engine(app_settings.sql_db_uri)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)

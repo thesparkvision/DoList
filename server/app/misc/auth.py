@@ -1,5 +1,5 @@
 from passlib.context import CryptContext
-from app.config.settings import app_settings
+from app.misc.settings import app_settings
 from app.db.sql.data import data
 
 pwd_context = CryptContext(
