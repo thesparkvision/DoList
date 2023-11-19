@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 from sqlalchemy import text
 
-from app.config.settings import app_settings
+from app.misc.settings import app_settings
 from app.db.sql.config import SessionLocal
 from app.api.v1 import v1_router
 from app.misc.logger import logger

@@ -49,6 +49,19 @@ async def login_user(
 
 @router.post("/{user_id}", response_model=user_schema.UserSchema)
 async def get_user(
-    user_id: str
+    user_id: int,
+    mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
-    return user_service.get_user(user_id)
+    try:
+        return user_service.get_user(mysql_session, user_id)
+    except exceptions.RecordDoesNotExist as e:
+        return JSONResponse(
+            content = {"error": str(e)},
+            status_code =  status.HTTP_404_NOT_FOUND
+        )
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content = {"error": str(e)},
+            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
