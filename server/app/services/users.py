@@ -45,7 +45,7 @@ def login_user(mysql_session: Session, user_detail: user_schema.UserLoginSchema)
     user_token_object =  models.UserToken(
         token=access_token,
         expiry_date = expiry_date,
-        token_type=models.TokenTypeEnum.authentication,
+        token_type=models.TokenTypeEnum.AUTHENTICATION,
         user_id = fetched_user.id
     )
     access_token_id = sql_db.add_user_token(mysql_session, user_token_object)

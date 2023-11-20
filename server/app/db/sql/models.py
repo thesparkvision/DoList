@@ -3,21 +3,21 @@ from app.db.sql import base
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, Enum, ForeignKey, Date, func
 from sqlalchemy.orm import relationship
 
-class StatusEnum(enum.Enum):
-    to_do = 1
-    in_progress = 2
-    done = 3
+class StatusEnum(str, enum.Enum):
+    TO_DO = "TO_DO"
+    IN_PROGRESS = "IN_PROGRESS"
+    DONE = "DONE"
 
-class PriorityEnum(enum.Enum):
-    critical = 1
-    high = 2
-    medium = 3
-    low = 4
+class PriorityEnum(str, enum.Enum):
+    CRITICAL = "CRITICAL"
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
 
-class TokenTypeEnum(enum.Enum):
-    authentication = 1
-    verification = 2
-    forgot_password = 3
+class TokenTypeEnum(str, enum.Enum):
+    AUTHENTICATION = "AUTHENTICATION"
+    VERIFICATION = "VERIFICATION"
+    FORGOT_PASSWORD = "FORGOT_PASSWORD"
 
 class BaseModel(base.Base):
     __abstract__ = True
@@ -61,8 +61,8 @@ class Task(BaseModel):
     id = Column(Integer, primary_key=True)
     title = Column(String(100), nullable=False)
     description = Column(String(300))
-    status = Column(Enum(StatusEnum, name='task_status'), default='to_do')
-    priority = Column(Enum(PriorityEnum, name='task_priority'), default='low')
+    status = Column(Enum(StatusEnum, name='task_status'), default=StatusEnum.TO_DO)
+    priority = Column(Enum(PriorityEnum, name='task_priority'), default=PriorityEnum.HIGH)
     due_date = Column(Date)
     completion_date = Column(Date)
 
