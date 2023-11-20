@@ -7,7 +7,7 @@ from fastapi import status
 
 from app.schemas import users as user_schema
 from app.services import users as user_service
-from app.misc import exceptions
+from app.misc import exceptions, auth
 from app.misc.logger import logger
 from app.db.sql.config import get_db_session
 
@@ -55,18 +55,16 @@ async def login_user(
             status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
-@router.post("/{user_id}", response_model=user_schema.UserSchema)
+@router.get(
+    "/", 
+    response_model=user_schema.UserSchema
+)
 async def get_user(
-    user_id: int,
+    current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
     try:
-        return user_service.get_user(mysql_session, user_id)
-    except exceptions.RecordDoesNotExist as e:
-        return JSONResponse(
-            content = {"error": str(e)},
-            status_code =  status.HTTP_404_NOT_FOUND
-        )
+        return current_user
     except Exception as e:
         logger.error(e)
         return JSONResponse(
