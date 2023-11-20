@@ -5,7 +5,7 @@ from app.schemas import users as user_schema
 from app.db.sql import data as sql_db
 from app.db.sql import models
 from app.misc import exceptions
-from app.misc.logger import logger
+from app.misc.logger import logger, app_settings
 from app.misc import auth
 
 def register_user(mysql_session: Session, user_detail: user_schema.UserRegisterSchema):
@@ -38,9 +38,10 @@ def login_user(mysql_session: Session, user_detail: user_schema.UserLoginSchema)
         raise Exception("Invalid Username or password")
 
     data = {"id": fetched_user.id }
-    expiry_date, access_token = auth.create_access_token(data=data, expires_delta=timedelta(hours=24))
+    expiry_date, access_token = auth.create_access_token(
+        data=data, expires_delta=timedelta(minutes=app_settings.access_token_expire_minutes)
+    )
 
-    #print(models.TokenTypeEnum.__dict__)
     user_token_object =  models.UserToken(
         token=access_token,
         expiry_date = expiry_date,
@@ -53,7 +54,8 @@ def login_user(mysql_session: Session, user_detail: user_schema.UserLoginSchema)
         raise exceptions.SomethingWentWrong
 
     return {
-        "access_token": access_token
+        "access_token": access_token,
+        "token_type": "bearer"
     }
 
 def get_user(mysql_session: Session, user_id: int):

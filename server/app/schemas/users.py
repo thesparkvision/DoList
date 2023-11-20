@@ -59,5 +59,6 @@ class UserLoginSchema(BaseModel):
     email: EmailStr
     password: str
 
-class AccessTokenSchema(BaseModel):
+class TokenSchema(BaseModel):
     access_token: str
+    token_type: str
