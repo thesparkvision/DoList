@@ -50,6 +50,10 @@ To activate poetry virtual environment, use:
 poetry shell
 ```
 
+Creating migration:
+```
+alembic revision --autogenerate -m "Migration Context Message"
+```
 Applying all migrations:
 
 ```

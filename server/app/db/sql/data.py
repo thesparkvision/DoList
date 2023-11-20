@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import Depends
 
-from app.db.sql.models import User
+from app.db.sql.models import User, UserToken
 
 def get_user_by_id(
     session: Session,
@@ -33,3 +33,14 @@ def add_user(
     session.add(new_user)
     session.commit()
     return new_user.id
+
+def add_user_token(
+    session: Session,
+    new_user_token: UserToken
+) -> None:
+    """
+        adds a new user token to the user token table and returns the id if inserted successfully
+    """
+    session.add(new_user_token)
+    session.commit()
+    return new_user_token.id
