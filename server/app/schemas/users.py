@@ -56,5 +56,8 @@ class UserRegisterSchema(BaseModel):
         raise WeakPasswordError(feedback=final_feedback)
 
 class UserLoginSchema(BaseModel):
-    email: str
+    email: EmailStr
     password: str
+
+class AccessTokenSchema(BaseModel):
+    access_token: str

@@ -41,11 +41,19 @@ async def register_user(
             status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
-@router.post("/login", response_model=user_schema.UserSchema)
+@router.post("/login", response_model=user_schema.AccessTokenSchema)
 async def login_user(
-    user_detail: user_schema.UserLoginSchema
+    user_detail: user_schema.UserLoginSchema,
+    mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
-    return user_service.login_user(user_detail)
+    try:
+        return user_service.login_user(mysql_session, user_detail)
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content = {"error": "Unexpected error in authenticating the user"},
+            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 @router.post("/{user_id}", response_model=user_schema.UserSchema)
 async def get_user(
