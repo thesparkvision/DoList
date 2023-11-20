@@ -1,9 +1,8 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
-from fastapi import status
 
 from app.schemas import users as user_schema
 from app.services import users as user_service
@@ -56,7 +55,7 @@ async def login_user(
         )
 
 @router.get(
-    "/", 
+    "/me/", 
     response_model=user_schema.UserSchema
 )
 async def get_user(
