@@ -41,7 +41,7 @@ async def register_user(
             status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
-@router.post("/login", response_model=user_schema.AccessTokenSchema)
+@router.post("/login", response_model=user_schema.TokenSchema)
 async def login_user(
     user_detail: user_schema.UserLoginSchema,
     mysql_session: Session = Depends(get_db_session)
