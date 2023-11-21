@@ -16,13 +16,17 @@ router = APIRouter()
 @router.post(
     "/register", 
     description="API to register a new user in system",
-    response_model=user_schema.UserSchema,
+    response_model=None,
     status_code=status.HTTP_201_CREATED
 )
 def register_user(
     user_detail: user_schema.UserRegisterSchema,
     mysql_session: Session = Depends(get_db_session)
-) -> user_schema.UserSchema:
+) -> None:
+    """
+        API to register a new user in the database.
+    """
+
     try:
         user_service.register_user(mysql_session, user_detail)
         return JSONResponse(
@@ -55,6 +59,10 @@ def login_user(
     user_detail: user_schema.UserLoginSchema,
     mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
+    """
+        API to authenticate a user and return authentication token.
+    """
+
     try:
         return user_service.login_user(mysql_session, user_detail)
     except Exception as e:
@@ -74,6 +82,10 @@ def get_user(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
+    """
+        API to retrieve user details if the user client is authenticated.
+    """
+
     try:
         return current_user
     except Exception as e:

@@ -24,9 +24,16 @@ def create_task(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> task_schema.TaskResponseSchema:
+    """"
+        API to create a task under a user.
+    """
+    
     try:
-        task = task_service.create_task(mysql_session, current_user, task_detail)
-        return task
+        return task_service.create_task(
+            mysql_session, 
+            current_user.id, 
+            task_detail
+        )
     except Exception as e:
         logger.error(e)
         return JSONResponse(
@@ -44,9 +51,34 @@ def create_task(
 )
 def update_task(
     task_id: str,
-    task_detail: task_schema.TaskRequestSchema
+    task_detail: task_schema.TaskRequestSchema,
+    current_user = Depends(auth.get_current_active_user),
+    mysql_session: Session = Depends(get_db_session)
 ) -> task_schema.TaskResponseSchema:
-    return task_service.update_task(task_id, task_detail)
+    """
+        API to update a user task by new updated information provided by user.
+    """
+
+    try:
+        return task_service.update_task(
+            mysql_session,
+            current_user.id, 
+            task_id, 
+            task_detail, 
+        )
+    except exceptions.RecordDoesNotExist as e:
+        return JSONResponse(
+            content={"error": str(e)},
+            status_code=status.HTTP_404_NOT_FOUND
+        )
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content = {
+                "error": str(e)
+            },
+            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 @router.get(
     "/{task_id}", 
@@ -59,6 +91,10 @@ def get_task(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> task_schema.TaskResponseSchema:
+    """
+        API to get a task related with user using task id.
+    """
+    
     try:
         return task_service.get_task(mysql_session, current_user.id, task_id)
     except exceptions.RecordDoesNotExist as e:
@@ -85,6 +121,10 @@ def get_all_tasks(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> list[task_schema.TaskResponseSchema]:
+    """
+        API to get all tasks related with a user if user is authenticated.
+    """
+    
     try:
         return task_service.get_all_tasks(mysql_session, current_user.id)
     except Exception as e:
@@ -107,6 +147,10 @@ def delete_task(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> None:
+    """
+        API to delete a task related with user.
+    """
+
     try:
         task_service.delete_task(mysql_session, current_user.id, task_id)
     except exceptions.RecordDoesNotExist as e:
