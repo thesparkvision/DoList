@@ -74,7 +74,7 @@ def get_user_task(
 def get_all_user_tasks(
     session: Session,
     user_id: int
-) -> Task:
+) -> list[Task]:
     """
         gets all user task from task table
     """
@@ -84,3 +84,13 @@ def get_all_user_tasks(
         .all()
     )
     return fetched_tasks
+
+def delete_user_task(
+    session: Session,
+    task_to_delete: Task
+) -> None:
+    """
+        delete a user task from task table
+    """
+    session.delete(task_to_delete)
+    session.commit()

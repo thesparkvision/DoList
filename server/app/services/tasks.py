@@ -24,3 +24,7 @@ def get_all_tasks(mysql_session: Session, user_id: int):
 
 def update_task():
     pass
+
+def delete_task(mysql_session: Session, user_id: int, task_id: int):
+    fetched_task = get_task(mysql_session, task_id, user_id)
+    sql_db.delete_user_task(mysql_session, fetched_task)
