@@ -7,11 +7,12 @@ from app.misc.settings import app_settings
 engine = create_engine(app_settings.sql_db_uri)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
+
 def get_db_session() -> Generator:
     """
-        gets a new session object using session factory for API calls
+    gets a new session object using session factory for API calls
     """
-    
+
     try:
         db_session = SessionLocal()
         yield db_session

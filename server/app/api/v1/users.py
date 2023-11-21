@@ -1,5 +1,3 @@
-from typing import List
-
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
@@ -14,53 +12,46 @@ router = APIRouter()
 
 
 @router.post(
-    "/register", 
+    "/register",
     description="API to register a new user in system",
     response_model=None,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
 )
 def register_user(
     user_detail: user_schema.UserRegisterSchema,
-    mysql_session: Session = Depends(get_db_session)
+    mysql_session: Session = Depends(get_db_session),
 ) -> None:
     """
-        API to register a new user in the database.
+    API to register a new user in the database.
     """
 
     try:
         user_service.register_user(mysql_session, user_detail)
-        return JSONResponse(
-            content = {},
-            status_code=status.HTTP_201_CREATED
-        )
+        return JSONResponse(content={}, status_code=status.HTTP_201_CREATED)
     except exceptions.RecordAlreadyExist as e:
         return JSONResponse(
-            content = {
-                "error": str(e)
-            },
-            status_code = status.HTTP_400_BAD_REQUEST
+            content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
         )
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content = {
-                "error": "Unexpected Error in registering the user"
-            },
-            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"error": "Unexpected Error in registering the user"},
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
+
 @router.post(
-    "/login", 
+    "/login",
     description="API for user login",
     response_model=user_schema.TokenSchema,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
 )
 def login_user(
     user_detail: user_schema.UserLoginSchema,
-    mysql_session: Session = Depends(get_db_session)
+    mysql_session: Session = Depends(get_db_session),
 ) -> user_schema.UserSchema:
     """
-        API to authenticate a user and return authentication token.
+    API to authenticate a user and return authentication token.
     """
 
     try:
@@ -68,22 +59,23 @@ def login_user(
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content = {"error": "Unexpected error in authenticating the user"},
-            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"error": "Unexpected error in authenticating the user"},
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
+
 @router.get(
-    "/me/", 
+    "/me/",
     description="API to retrieve authenticated user details",
     response_model=user_schema.UserSchema,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
 )
 def get_user(
-    current_user = Depends(auth.get_current_active_user),
-    mysql_session: Session = Depends(get_db_session)
+    current_user=Depends(auth.get_current_active_user),
+    mysql_session: Session = Depends(get_db_session),
 ) -> user_schema.UserSchema:
     """
-        API to retrieve user details if the user client is authenticated.
+    API to retrieve user details if the user client is authenticated.
     """
 
     try:
@@ -91,6 +83,5 @@ def get_user(
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content = {"error": str(e)},
-            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
