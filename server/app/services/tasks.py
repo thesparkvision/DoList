@@ -46,8 +46,11 @@ def update_task(
     """
     Service method for updating a user task with user provided updates.
     """
-
-    pass
+    fetched_task: Task = get_task(mysql_session, user_id, task_id)
+    updated_task: Task = sql_db.update_user_task(
+        mysql_session, fetched_task, task_detail
+    )
+    return updated_task
 
 
 def delete_task(mysql_session: Session, user_id: int, task_id: int) -> None:
@@ -55,5 +58,5 @@ def delete_task(mysql_session: Session, user_id: int, task_id: int) -> None:
     Service method for hard deleting a user task.
     """
 
-    fetched_task: Task = get_task(mysql_session, task_id, user_id)
+    fetched_task: Task = get_task(mysql_session, user_id, task_id)
     sql_db.delete_user_task(mysql_session, fetched_task)

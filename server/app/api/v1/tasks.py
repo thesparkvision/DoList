@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
+from typing import Union
 
 from app.schemas import tasks as task_schema
 from app.services import tasks as task_service
@@ -42,7 +43,7 @@ def create_task(
     status_code=status.HTTP_200_OK,
 )
 def update_task(
-    task_id: str,
+    task_id: int,
     task_detail: task_schema.TaskRequestSchema,
     current_user=Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session),
@@ -106,7 +107,7 @@ def get_task(
 def get_all_tasks(
     current_user=Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session),
-) -> list[task_schema.TaskResponseSchema]:
+) -> Union[list[task_schema.TaskResponseSchema], None]:
     """
     API to get all tasks related with a user if user is authenticated.
     """
