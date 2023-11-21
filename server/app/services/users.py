@@ -5,7 +5,7 @@ from app.schemas import users as user_schema
 from app.db.sql import data as sql_db
 from app.db.sql.models import User, UserToken, TokenTypeEnum
 from app.misc import exceptions
-from app.misc.logger import app_settings
+from app.misc.settings import app_settings
 from app.misc import auth
 
 

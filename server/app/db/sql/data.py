@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.db.sql.models import User, UserToken, Task
+from app.schemas.tasks import TaskRequestSchema
 
 
 def get_user_by_id(session: Session, user_id: int) -> [User, None]:
@@ -74,3 +75,21 @@ def delete_user_task(session: Session, task_to_delete: Task) -> None:
 
     session.delete(task_to_delete)
     session.commit()
+
+
+def update_user_task(
+    session: Session, task_to_update: Task, task_detail: TaskRequestSchema
+) -> Task:
+    """
+    Update a user task based on the given details.
+    """
+
+    for field, value in task_detail.dict().items():
+        if field in {"status", "priority"} and value is None:
+            continue
+
+        setattr(task_to_update, field, value)
+
+    session.commit()
+
+    return task_to_update
