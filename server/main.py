@@ -32,7 +32,11 @@ app.include_router(v1_router, prefix="/api/v1", tags=["v1"])
     description = "API to retrieve public information for the server",
     status_code=status.HTTP_200_OK
 )
-async def info():
+def info() -> None:
+    """
+        API to retrieve public information for the server to check its working.
+    """
+
     return {
         "app_name": app_settings.app_name
     }
@@ -44,14 +48,22 @@ async def info():
     after=after_log(logger, logging.WARN),
 )
 def init() -> None:
+    """
+        Function to check for database connectivity during app start.
+    """
+    
     try:
-        db = SessionLocal()
+        db: Session = SessionLocal()
         db.execute(text("SELECT 1"))
     except Exception as e:
         logger.error(e)
         raise e
 
 def main() -> None:
+    """
+        Runs required actions during app start
+    """
+
     logger.info("Initializing Service")
     init()
     logger.info("Service finished initializing")
