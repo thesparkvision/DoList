@@ -1,5 +1,5 @@
 #!/bin/sh -e
 set -x
 
-ruff --fix app
-black app
+ruff --fix app main.py
+black app main.py
