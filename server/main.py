@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
@@ -27,7 +27,11 @@ if allowed_origins:
 
 app.include_router(v1_router, prefix="/api/v1", tags=["v1"])
 
-@app.get("/info")
+@app.get(
+    "/info",
+    description = "API to retrieve public information for the server",
+    status_code=status.HTTP_200_OK
+)
 async def info():
     return {
         "app_name": app_settings.app_name

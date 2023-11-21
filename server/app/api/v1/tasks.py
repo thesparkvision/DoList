@@ -15,9 +15,11 @@ router = APIRouter()
 
 @router.post(
     "/", 
-    response_model=task_schema.TaskResponseSchema
+    description="API to create a user task.",
+    response_model=task_schema.TaskResponseSchema,
+    status_code=status.HTTP_201_CREATED
 )
-async def create_task(
+def create_task(
     task_detail: task_schema.TaskRequestSchema,
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
@@ -34,8 +36,13 @@ async def create_task(
             status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
-@router.patch("/{task_id}", response_model=task_schema.TaskResponseSchema)
-async def update_task(
+@router.patch(
+    "/{task_id}", 
+    description="API to update a user task.",
+    response_model=task_schema.TaskResponseSchema,
+    status_code = status.HTTP_200_OK
+)
+def update_task(
     task_id: str,
     task_detail: task_schema.TaskRequestSchema
 ) -> task_schema.TaskResponseSchema:
@@ -43,8 +50,11 @@ async def update_task(
 
 @router.get(
     "/{task_id}", 
-    response_model=task_schema.TaskResponseSchema)
-async def get_task(
+    description = "API to get a user task.",
+    response_model=task_schema.TaskResponseSchema,
+    status_code = status.HTTP_200_OK
+)
+def get_task(
     task_id: int,
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
@@ -67,10 +77,48 @@ async def get_task(
 
 @router.get(
     "/", 
-    response_model=list[task_schema.TaskResponseSchema]
+    description="API to get all tasks related with a user.",
+    response_model=list[task_schema.TaskResponseSchema],
+    status_code=status.HTTP_200_OK
 )
-async def get_all_tasks(
+def get_all_tasks(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> list[task_schema.TaskResponseSchema]:
-    return task_service.get_all_tasks(mysql_session, current_user.id)
+    try:
+        return task_service.get_all_tasks(mysql_session, current_user.id)
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content = {
+                "error": str(e)
+            },
+            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+@router.delete(
+    "/{task_id}",
+    description = "API to delete a user task.",
+    response_model = None,
+    status_code = status.HTTP_204_NO_CONTENT
+)
+def delete_task(
+    task_id: int,
+    current_user = Depends(auth.get_current_active_user),
+    mysql_session: Session = Depends(get_db_session)
+) -> None:
+    try:
+        task_service.delete_task(mysql_session, current_user.id, task_id)
+    except exceptions.RecordDoesNotExist as e:
+        return JSONResponse(
+            content={"error": str(e)},
+            status_code=status.HTTP_404_NOT_FOUND
+        )
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content = {
+                "error": str(e)
+            },
+            status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
+        )

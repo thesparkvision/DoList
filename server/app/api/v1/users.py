@@ -13,8 +13,13 @@ from app.db.sql.config import get_db_session
 router = APIRouter()
 
 
-@router.post("/register", response_model=user_schema.UserSchema)
-async def register_user(
+@router.post(
+    "/register", 
+    description="API to register a new user in system",
+    response_model=user_schema.UserSchema,
+    status_code=status.HTTP_201_CREATED
+)
+def register_user(
     user_detail: user_schema.UserRegisterSchema,
     mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
@@ -40,8 +45,13 @@ async def register_user(
             status_code =  status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
-@router.post("/login", response_model=user_schema.TokenSchema)
-async def login_user(
+@router.post(
+    "/login", 
+    description="API for user login",
+    response_model=user_schema.TokenSchema,
+    status_code=status.HTTP_200_OK
+)
+def login_user(
     user_detail: user_schema.UserLoginSchema,
     mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
@@ -56,9 +66,11 @@ async def login_user(
 
 @router.get(
     "/me/", 
-    response_model=user_schema.UserSchema
+    description="API to retrieve authenticated user details",
+    response_model=user_schema.UserSchema,
+    status_code=status.HTTP_200_OK
 )
-async def get_user(
+def get_user(
     current_user = Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session)
 ) -> user_schema.UserSchema:
