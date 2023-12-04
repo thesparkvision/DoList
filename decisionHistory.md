@@ -1,3 +1,11 @@
+## 04 December 2023
+
+### Design Framework
+
+-   Decided to use ChakraUI framework for design - no special reason, wanted to try out this framework for frontend development
+
+---
+
 ## 17 November 2023
 
 ### User Authentication, Password Recovery
