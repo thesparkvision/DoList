@@ -3,7 +3,7 @@ name: React Lint
 on:
   pull_request:
     branches:
-      - dummy-branch
+      - main
 
 jobs:
   build:
