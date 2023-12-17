@@ -3,8 +3,14 @@ import "./Footer.scss"
 
 function Footer() {
     return (
-        <Flex as="nav" justifyContent={"center"} p="4" aria-label="Site Footer" id="footer">
-            <Text fontSize="xl" fontWeight="bold">Made with ❤️ by Aman</Text>
+        <Flex 
+            as="nav" 
+            justifyContent="center" 
+            p="1" 
+            aria-label="Site Footer" 
+            id="footer"
+        >
+            <Text fontSize="sm" fontWeight="bold">Built with ❤️ by Aman</Text>
         </Flex>
     );
 }

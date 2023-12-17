@@ -1,14 +1,22 @@
-import { Box, Flex, Text, Link } from "@chakra-ui/react";
+import { Box, Flex, Text, Link, Image } from "@chakra-ui/react";
+import DoListLogo from "../assets/doListLogo.svg"
 import "./Header.scss"
 
 function Header() {
     return (
-        <Flex as="nav" align="center" justify="space-between" p="4" aria-label="Site Header" id="header">
+        <Flex 
+            as="nav" 
+            align="center" 
+            justify="space-between" 
+            p="2" 
+            aria-label="Site Header" 
+            id="header"
+        >
             <Box>
-                <Text fontSize="xl" fontWeight="bold">Logo</Text>
+                <Image src={DoListLogo} alt="Logo" width="3.5rem" height="2.5rem"/>
             </Box>
             <Box>
-                <Link mx="2" href="#">Home</Link>
+                <Link mx="2" href="/" color="gold">Home</Link>
             </Box>
         </Flex>
     );

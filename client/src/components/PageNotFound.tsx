@@ -5,7 +5,7 @@ function PageNotFound(){
     return (
         <Box id="pageNotFound">
             <Text fontWeight={"bold"}>
-                Requested Page Not Found
+                Page Not Found
             </Text>
         </Box>
     )
