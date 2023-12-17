@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Link, Image } from "@chakra-ui/react";
+import { Box, Flex, Link, Image } from "@chakra-ui/react";
 import DoListLogo from "../assets/doListLogo.svg"
 import "./Header.scss"
 
