@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px"
+    viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+    <g display="none">
+        <rect x="-331.365" y="-102.667" display="inline" fill="#000000" width="473.333" height="236"></rect>
+    </g>
+    <g display="none">
+        <g display="inline">
+            <g>
+                <path d="M30,1.984v28H2v-28H30 M32-0.016H0v32h32V-0.016L32-0.016z"></path>
+            </g>
+        </g>
+        <g display="inline">
+            <g>
+                <polygon fill="#000000" points="10.918,9.09 15.398,16.831 6.439,16.831    "></polygon>
+            </g>
+            <g>
+                <polygon fill="#000000" points="21.082,5.59 25.561,13.331 16.602,13.331    "></polygon>
+            </g>
+            <g>
+                <polygon fill="#000000" points="10.918,18.669 15.398,26.41 6.439,26.41    "></polygon>
+            </g>
+            <g>
+                <polygon points="21.082,15.169 25.561,22.91 16.602,22.91    "></polygon>
+            </g>
+        </g>
+    </g>
+    <g display="none">
+        <g display="inline">
+            <path fill="#000000" d="M31,0.984v30H1v-30H31 M32-0.016H0v32h32V-0.016L32-0.016z"></path>
+        </g>
+        <g display="inline">
+            <path fill="#000000"
+                d="M10.918,11.087l2.745,4.744h-5.49L10.918,11.087 M10.918,9.09l-4.479,7.741h8.958L10.918,9.09L10.918,9.09    z">
+            </path>
+        </g>
+        <g display="inline">
+            <path fill="#000000"
+                d="M21.082,7.587l2.745,4.744h-5.49L21.082,7.587 M21.082,5.59l-4.479,7.741h8.958L21.082,5.59L21.082,5.59z">
+            </path>
+        </g>
+        <g display="inline">
+            <path fill="#000000"
+                d="M10.918,20.666l2.745,4.744h-5.49L10.918,20.666 M10.918,18.669L6.439,26.41h8.958L10.918,18.669    L10.918,18.669z">
+            </path>
+        </g>
+        <g display="inline">
+            <path fill="#000000"
+                d="M21.082,17.166l2.745,4.744h-5.49L21.082,17.166 M21.082,15.169l-4.479,7.741h8.958L21.082,15.169    L21.082,15.169z">
+            </path>
+        </g>
+    </g>
+    <g display="none">
+        <g display="inline">
+            <g>
+                <rect x="0.5" y="0.484" fill="#000000" width="31" height="31"></rect>
+            </g>
+            <g>
+                <g>
+                    <path d="M31,0.984v30H1v-30H31 M32-0.016H0v32h32V-0.016L32-0.016z"></path>
+                </g>
+            </g>
+        </g>
+        <g display="inline">
+            <g>
+                <polygon fill="#000000" points="7.307,16.331 10.918,10.088 14.53,16.331    "></polygon>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M10.918,11.087l2.745,4.744h-5.49L10.918,11.087 M10.918,9.09l-4.479,7.741h8.958L10.918,9.09L10.918,9.09z">
+                    </path>
+                </g>
+            </g>
+        </g>
+        <g display="inline">
+            <g>
+                <polygon fill="#000000" points="17.47,12.831 21.082,6.588 24.693,12.831    "></polygon>
+            </g>
+            <g>
+                <path
+                    d="M21.082,7.587l2.745,4.744h-5.49L21.082,7.587 M21.082,5.59l-4.479,7.741h8.958L21.082,5.59L21.082,5.59z">
+                </path>
+            </g>
+        </g>
+        <g display="inline">
+            <g>
+                <polygon fill="#000000" points="7.307,25.91 10.918,19.667 14.53,25.91    "></polygon>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M10.918,20.666l2.745,4.744h-5.49L10.918,20.666 M10.918,18.669L6.439,26.41h8.958L10.918,18.669L10.918,18.669z">
+                    </path>
+                </g>
+            </g>
+        </g>
+        <g display="inline">
+            <g>
+                <polygon fill="#000000" points="17.47,22.41 21.082,16.167 24.693,22.41    "></polygon>
+            </g>
+            <g>
+                <path
+                    d="M21.082,17.166l2.745,4.744h-5.49L21.082,17.166 M21.082,15.169l-4.479,7.741h8.958L21.082,15.169L21.082,15.169z">
+                </path>
+            </g>
+        </g>
+    </g>
+    <g>
+        <g>
+            <path d="M0,31.984h32v-32H0V31.984z M2,1.984h28v28H2V1.984z"></path>
+            <polygon points="6.439,16.831 15.398,16.831 10.918,9.09   "></polygon>
+            <polygon points="16.602,13.331 25.561,13.331 21.082,5.59   "></polygon>
+            <polygon points="6.439,26.41 15.398,26.41 10.918,18.669   "></polygon>
+            <polygon points="16.602,22.91 25.561,22.91 21.082,15.169   "></polygon>
+        </g>
+    </g>
+</svg>
