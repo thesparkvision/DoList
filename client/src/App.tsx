@@ -1,9 +1,12 @@
 import React from "react"
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Header from './components/Header'
 import Footer from "./components/Footer"
 import PageNotFound from "./components/PageNotFound";
 import HomePage from "./containers/HomePage";
+import SignupPage from "./containers/SignupPage";
+import useAuth from "./hooks/auth";
+import LoginPage from "./containers/LoginPage";
 import { ChildrenProps } from "./types";
 import './App.scss'
 
@@ -19,6 +22,16 @@ const AppContent: React.FC<ChildrenProps> = ({children}) => {
   )
 }
 
+const PrivateRoute = () => {
+  const isUserAuthenticated: boolean = useAuth()
+
+  return  (
+    <React.Fragment>
+      {isUserAuthenticated ? <Outlet /> : <Navigate to="/login" />}
+    </React.Fragment>
+  );
+};
+
 function App() {  
   return (
     <div
@@ -27,14 +40,18 @@ function App() {
       id="app-wrapper"
     >
       <Header />
-      <AppContent>
-        <Router>
+      <Router basename={"/"}>
+        <AppContent>
           <Routes>
-            <Route path="/" Component={HomePage} />
+            <Route path="/signup" Component={SignupPage} />
+            <Route path="/login" Component={LoginPage} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/home" Component={HomePage} />
+            </Route>
             <Route path="*" Component={PageNotFound} />
           </Routes>
-        </Router>
-      </AppContent>
+        </AppContent>
+      </Router>
       <Footer />
     </div>
   )
