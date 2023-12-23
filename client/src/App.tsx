@@ -6,9 +6,11 @@ import PageNotFound from "./components/PageNotFound";
 import HomePage from "./containers/HomePage";
 import SignupPage from "./containers/SignupPage";
 import LoginPage from "./containers/LoginPage";
+import LandingPage from "./containers/LandingPage";
 import checkIsUserAuthenticated from "./hooks/auth";
 import { ChildrenProps } from "./types";
 import './App.scss'
+
 const AppContent: React.FC<ChildrenProps> = ({children}) => {
   return (
     <div
@@ -39,20 +41,22 @@ function App() {
       id="app-wrapper"
     >
       <Header />
-      <Router basename={"/"}>
-        <AppContent>
-          <Routes>
-            <Route path="/signup" Component={SignupPage} />
-            <Route path="/login" Component={LoginPage} />
+      <AppContent>
+        <Router basename={"/"}>
+            <Routes>
+              <Route path="/signup" Component={SignupPage} />
+              <Route path="/login" Component={LoginPage} />
 
-            <Route element={<PrivateRoute />}>
-              <Route path="/" Component={HomePage} />
-            </Route>
+              <Route path="/" element={checkIsUserAuthenticated() ? <HomePage/> : <LandingPage/>} />
 
-            <Route path="*" Component={PageNotFound} />
-          </Routes>
-        </AppContent>
-      </Router>
+              <Route element={<PrivateRoute />}>
+                {/* TODO: Add Private routes here */ }
+              </Route>
+
+              <Route path="*" Component={PageNotFound} />
+            </Routes>
+        </Router>
+      </AppContent>
       <Footer />
     </div>
   )
