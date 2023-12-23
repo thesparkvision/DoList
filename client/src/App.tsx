@@ -5,11 +5,10 @@ import Footer from "./components/Footer"
 import PageNotFound from "./components/PageNotFound";
 import HomePage from "./containers/HomePage";
 import SignupPage from "./containers/SignupPage";
-import useAuth from "./hooks/auth";
 import LoginPage from "./containers/LoginPage";
+import checkIsUserAuthenticated from "./hooks/auth";
 import { ChildrenProps } from "./types";
 import './App.scss'
-
 const AppContent: React.FC<ChildrenProps> = ({children}) => {
   return (
     <div
@@ -23,7 +22,7 @@ const AppContent: React.FC<ChildrenProps> = ({children}) => {
 }
 
 const PrivateRoute = () => {
-  const isUserAuthenticated: boolean = useAuth()
+  const isUserAuthenticated: boolean = checkIsUserAuthenticated()
 
   return  (
     <React.Fragment>
@@ -45,9 +44,11 @@ function App() {
           <Routes>
             <Route path="/signup" Component={SignupPage} />
             <Route path="/login" Component={LoginPage} />
+
             <Route element={<PrivateRoute />}>
-              <Route path="/home" Component={HomePage} />
+              <Route path="/" Component={HomePage} />
             </Route>
+
             <Route path="*" Component={PageNotFound} />
           </Routes>
         </AppContent>
