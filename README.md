@@ -4,6 +4,8 @@ This is a task management application made to track basic tasks any person has t
 ## Live Web App Link
 https://poetic-gnome-a50aea.netlify.app/
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e8df4039-0ecc-4a94-b521-16e621aa6f4d/deploy-status)](https://app.netlify.com/sites/poetic-gnome-a50aea/deploys)
+
 ## Database Diagram
 You can view the database diagram for this web app here:
 https://dbdocs.io/amanpandya712/DoList
