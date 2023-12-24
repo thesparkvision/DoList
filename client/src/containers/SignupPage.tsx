@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Flex, Text, FormLabel, FormControl } from "@chakra-ui/react"
+import { Box, Button, Input, Text, FormLabel, FormControl, Card } from "@chakra-ui/react"
 import { BACKEND_URLS } from "../lib/Constants";
 import { failedNotification, successNotification } from "../lib/Utils";
 import { useNavigate } from "react-router-dom";
@@ -10,21 +10,21 @@ interface FormData {
     password: string;
     email: string;
 }
-  
+
 const initialFormData: FormData = {
     fullName: '',
     password: '',
     email: '',
 };
 
-function SignupPage(){
-    const navigate = useNavigate() 
-     
+function SignupPage() {
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState<FormData>(initialFormData)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const {name, value} = event.target
-        setFormData((prevFormData)=> ({...prevFormData, [name]: value}))
+        const { name, value } = event.target
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }))
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -37,7 +37,7 @@ function SignupPage(){
         }
 
         await fetch(
-            BACKEND_URLS.SIGNUP_URL, 
+            BACKEND_URLS.SIGNUP_URL,
             {
                 method: 'POST',
                 headers: {
@@ -59,8 +59,8 @@ function SignupPage(){
 
             setTimeout(() => {
                 navigate('/auth/login')
-            }, 3000); 
-            
+            }, 3000);
+
         }).catch((error) => {
             failedNotification({
                 title: "Something went wrong with account creation!",
@@ -69,17 +69,17 @@ function SignupPage(){
         })
     }
 
-    return  (
+    return (
         <Box id="signupPage">
             <Text fontSize="xl" fontWeight="bold">
                 Signup
             </Text>
-            <br/>
-            
-            <Flex id="signupBox">
-                <form onSubmit={handleSubmit}>   
-                    <FormControl 
-                        className="formControl" 
+            <br />
+
+            <Card id="signupBox">
+                <form onSubmit={handleSubmit}>
+                    <FormControl
+                        className="formControl"
                         isRequired
                     >
                         <FormLabel mb='8px'>Email Address: </FormLabel>
@@ -93,11 +93,11 @@ function SignupPage(){
                             maxLength={30}
                         />
                     </FormControl>
-                    <br/>
+                    <br />
 
-                    <FormControl 
-                        className="formControl" 
-                        isRequired 
+                    <FormControl
+                        className="formControl"
+                        isRequired
                     >
                         <FormLabel mb='8px'>Full Name: </FormLabel>
                         <Input
@@ -110,10 +110,10 @@ function SignupPage(){
                             maxLength={60}
                         />
                     </FormControl>
-                    <br/>
+                    <br />
 
-                    <FormControl 
-                        className="formControl" 
+                    <FormControl
+                        className="formControl"
                         isRequired
                     >
                         <FormLabel mb='8px'>Password: </FormLabel>
@@ -129,17 +129,17 @@ function SignupPage(){
                             maxLength={25}
                         />
                     </FormControl>
-                    <br/>
+                    <br />
 
-                    <Button 
-                        id="submitBtn" 
-                        type="submit" 
+                    <Button
+                        id="submitBtn"
+                        type="submit"
                         colorScheme='teal'
                     >
                         Submit
                     </Button>
-                    </form>
-            </Flex>
+                </form>
+            </Card>
         </Box>
     )
 }
