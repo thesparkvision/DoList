@@ -95,6 +95,7 @@ function SignupPage(){
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
+                            autoComplete="off"
                             placeholder='Enter email address here'
                             size='sm'
                             maxLength={30}
@@ -115,6 +116,7 @@ function SignupPage(){
                             name="fullName"
                             value={formData.fullName}
                             onChange={handleChange}
+                            autoComplete="off"
                             placeholder='Enter your full name here'
                             size='sm'
                             maxLength={60}
@@ -136,6 +138,7 @@ function SignupPage(){
                             value={formData.password}
                             type={'text'}
                             onChange={handleChange}
+                            autoComplete="off"
                             placeholder='Enter your password here'
                             size='sm'
                             minLength={6}
