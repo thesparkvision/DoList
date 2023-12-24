@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Flex, Text, FormLabel, FormControl, FormErrorMessage } from "@chakra-ui/react"
+import { Box, Button, Input, Flex, Text, FormLabel, FormControl } from "@chakra-ui/react"
 import { BACKEND_URLS } from "../lib/Constants";
 import { failedNotification, successNotification } from "../lib/Utils";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +10,6 @@ interface FormData {
     password: string;
     email: string;
 }
-
-interface FormErrors {
-    fullName: string;
-    password: string;
-    email: string;
-    backend: string;
-}
   
 const initialFormData: FormData = {
     fullName: '',
@@ -24,28 +17,14 @@ const initialFormData: FormData = {
     email: '',
 };
 
-const initialFormErrors: FormErrors = {
-    fullName: '',
-    password: '',
-    email: '',
-    backend: ''
-};
-
 function SignupPage(){
     const navigate = useNavigate() 
      
     const [formData, setFormData] = useState<FormData>(initialFormData)
-    const [formErrors, setFormErrors] = useState<FormErrors>(initialFormErrors)
-    
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = event.target
         setFormData((prevFormData)=> ({...prevFormData, [name]: value}))
-    }
-
-    const setError = (key: string, error: string): void => {
-        setFormErrors(
-            (prevFormErrors) => ({...prevFormErrors, [key]: error})
-        )
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -102,7 +81,6 @@ function SignupPage(){
                     <FormControl 
                         className="formControl" 
                         isRequired
-                        isInvalid={formErrors.email !== ''}
                     >
                         <FormLabel mb='8px'>Email Address: </FormLabel>
                         <Input
@@ -114,16 +92,12 @@ function SignupPage(){
                             size='sm'
                             maxLength={30}
                         />
-                        <FormErrorMessage>
-                            {formErrors.email}
-                        </FormErrorMessage>
                     </FormControl>
                     <br/>
 
                     <FormControl 
                         className="formControl" 
                         isRequired 
-                        isInvalid={formErrors.fullName !== ''}
                     >
                         <FormLabel mb='8px'>Full Name: </FormLabel>
                         <Input
@@ -135,16 +109,12 @@ function SignupPage(){
                             size='sm'
                             maxLength={60}
                         />
-                        <FormErrorMessage>
-                            {formErrors.fullName}
-                        </FormErrorMessage>
                     </FormControl>
                     <br/>
 
                     <FormControl 
                         className="formControl" 
                         isRequired
-                        isInvalid = {formErrors.password !== ''}
                     >
                         <FormLabel mb='8px'>Password: </FormLabel>
                         <Input
@@ -158,9 +128,6 @@ function SignupPage(){
                             minLength={6}
                             maxLength={25}
                         />
-                        <FormErrorMessage>
-                            {formErrors.password}
-                        </FormErrorMessage>
                     </FormControl>
                     <br/>
 
