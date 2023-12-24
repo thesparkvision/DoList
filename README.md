@@ -18,6 +18,8 @@ This link can be referred for dbdocs commands:
 https://dbdocs.io/docs
 
 ## Deployment Platforms
+```text
 Frontend: Netlify
-Backend: Render
+Backend: Render 
 Database: Render
+```
