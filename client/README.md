@@ -26,6 +26,15 @@ If you are developing a production application, we recommend updating the config
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
+## Environment Variables
+
+To run the app successfully, create a .env file in /client directory and set this environment variables
+
+```
+VITE_REACT_APP_API_URL={BACKEND_URL}
+VITE_REACT_APP_NAME=Dolist
+```
+
 ## Development Commands
 
 To run the app, use:

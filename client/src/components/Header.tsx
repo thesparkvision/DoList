@@ -13,8 +13,16 @@ function Header() {
             id="header"
         >
             <Box>
-                <Image src={DoListLogo} alt="Logo" width="3.5rem" height="2.5rem"/>
+                <Link href="/">
+                    <Image 
+                        src={DoListLogo} 
+                        alt="Logo" 
+                        width="3.5rem" 
+                        height="2.5rem"
+                    />
+                </Link>
             </Box>
+            
             <Box>
                 <Link mx="2" href="/" color="gold">Home</Link>
             </Box>

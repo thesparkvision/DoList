@@ -44,8 +44,10 @@ function App() {
       <AppContent>
         <Router basename={"/"}>
             <Routes>
-              <Route path="/signup" Component={SignupPage} />
-              <Route path="/login" Component={LoginPage} />
+              <Route path="/auth">
+                <Route path="signup" Component={SignupPage} />
+                <Route path="login" Component={LoginPage} />
+              </Route>
 
               <Route path="/" element={checkIsUserAuthenticated() ? <HomePage/> : <LandingPage/>} />
 
