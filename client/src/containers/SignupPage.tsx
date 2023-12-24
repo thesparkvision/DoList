@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Input, Flex, Text, FormLabel, FormControl, FormErrorMessage } from "@chakra-ui/react"
 import { BACKEND_URLS } from "../lib/Constants";
 import { failedNotification, successNotification } from "../lib/Utils";
+import { useNavigate } from "react-router-dom";
 import "./SignupPage.scss"
 
 interface FormData {
@@ -31,6 +32,8 @@ const initialFormErrors: FormErrors = {
 };
 
 function SignupPage(){
+    const navigate = useNavigate() 
+     
     const [formData, setFormData] = useState<FormData>(initialFormData)
     const [formErrors, setFormErrors] = useState<FormErrors>(initialFormErrors)
     
@@ -69,10 +72,21 @@ function SignupPage(){
                     throw { status: response.status, errorData };
                 });
             }
-            successNotification("Account Created Successfully!")
+
+            successNotification({
+                title: "Account Created Successfully! Redirecting to login page...",
+                duration: 8000
+            })
+
+            setTimeout(() => {
+                navigate('/auth/login')
+            }, 3000); 
+            
         }).catch((error) => {
-            failedNotification(error.errorData.detail)
-            setError('backend', error.errorData.detail)
+            failedNotification({
+                title: "Something went wrong with account creation!",
+                description: `HTTP Status: ${error.status}`
+            })
         })
     }
 
