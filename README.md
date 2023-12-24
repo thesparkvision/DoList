@@ -1,6 +1,9 @@
 # DoList
 This is a task management application made to track basic tasks any person has to finish in a day
 
+![image](https://github.com/thesparkvision/DoList/assets/40954160/7069cfba-79bc-43ea-a4ed-f928c1ed428e)
+
+
 ## Live Web App Link
 https://poetic-gnome-a50aea.netlify.app/
 
@@ -13,3 +16,8 @@ https://dbdocs.io/amanpandya712/DoList
 ## Setting up Dbdocs
 This link can be referred for dbdocs commands:
 https://dbdocs.io/docs
+
+## Deployment Platforms
+Frontend: Netlify
+Backend: Render
+Database: Render
