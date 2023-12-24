@@ -70,7 +70,7 @@ function SignupPage(){
                 });
             }
             successNotification("Account Created Successfully!")
-        }).catch((error: any) => {
+        }).catch((error) => {
             failedNotification(error.errorData.detail)
             setError('backend', error.errorData.detail)
         })
