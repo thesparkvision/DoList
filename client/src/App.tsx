@@ -33,6 +33,16 @@ const PrivateRoute = () => {
   );
 };
 
+const SpecialHomePageRoute = () => {
+  const isUserAuthenticated: boolean = checkIsUserAuthenticated()
+
+  return  (
+    <React.Fragment>
+      {isUserAuthenticated ? <HomePage/> : <LandingPage/>}
+    </React.Fragment>
+  );
+}
+
 function App() {  
   return (
     <div
@@ -49,7 +59,7 @@ function App() {
                 <Route path="login" Component={LoginPage} />
               </Route>
 
-              <Route path="/" element={checkIsUserAuthenticated() ? <HomePage/> : <LandingPage/>} />
+              <Route path="/" element={<SpecialHomePageRoute />} />
 
               <Route element={<PrivateRoute />}>
                 {/* TODO: Add Private routes here */ }

@@ -52,7 +52,7 @@ function LoginPage() {
             return response.json()
         }).then(data => {
             if(data.access_token){
-                localStorage.setItem("ACCESS_TOKEN", data.access_token)
+                localStorage.setItem("API_TOKEN", data.access_token)
             }
 
             successNotification({
