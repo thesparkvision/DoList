@@ -1,4 +1,4 @@
-import { Box, Button, Card, FormControl, FormLabel, Input, Text } from "@chakra-ui/react"
+import { Box, Button, Card, FormControl, FormLabel, Input, Spinner, Text, Tooltip } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { failedNotification, successNotification } from "../lib/Utils";
@@ -22,6 +22,7 @@ function LoginPage() {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState<FormData>(initialFormData)
+    const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target
@@ -30,6 +31,8 @@ function LoginPage() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault()
+
+        setIsSubmitBtnDisabled(true)
 
         const requestPayload = {
             "email": formData.email,
@@ -72,6 +75,8 @@ function LoginPage() {
                 title: "Something went wrong with user authentication!",
                 description: error?.detail
             })
+        }).finally(()=> {
+            setIsSubmitBtnDisabled(false)
         })
     }
 
@@ -120,13 +125,16 @@ function LoginPage() {
                     </FormControl>
                     <br />
 
-                    <Button
-                        id="submitBtn"
-                        type="submit"
-                        colorScheme='teal'
-                    >
-                        Submit
-                    </Button>
+                    <Tooltip label="API call is going on" isDisabled={!isSubmitBtnDisabled}>
+                        <Button
+                            id="submitBtn"
+                            type="submit"
+                            colorScheme='teal'
+                            isDisabled={isSubmitBtnDisabled}
+                        >
+                            Submit &nbsp; {isSubmitBtnDisabled && <Spinner />}
+                        </Button>
+                    </Tooltip>
                 </form>
             </Card>
         </Box>
