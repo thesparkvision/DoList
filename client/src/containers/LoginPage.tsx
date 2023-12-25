@@ -48,7 +48,7 @@ function LoginPage() {
         ).then((response) => {
             if (!response.ok) {
                 return response.json().then(errorData => {
-                    throw { status: response.status, errorData };
+                    throw { status: response.status, detail: errorData?.detail };
                 });
             }
 
@@ -70,7 +70,7 @@ function LoginPage() {
         }).catch((error) => {
             failedNotification({
                 title: "Something went wrong with user authentication!",
-                description: `HTTP Status: ${error.status}`
+                description: error?.detail
             })
         })
     }

@@ -35,6 +35,5 @@ class WeakPasswordError(HTTPException):
 
 
 class NotAuthorized(HTTPException):
-    def __init__(self):
-        detail = "Not Authorized to access this resource"
-        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail=detail)
+    def __init__(self, detail = "Not Authorized to access this resource"):
+        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED, detail=detail)

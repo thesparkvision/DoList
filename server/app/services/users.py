@@ -50,7 +50,7 @@ def login_user(
         is_invalid = True
 
     if is_invalid or not fetched_user.is_active:
-        raise Exception("Invalid Username or password")
+        raise exceptions.NotAuthorized(detail="Invalid Username or password")
 
     data = {"id": fetched_user.id}
     expiry_date, access_token = auth.create_access_token(

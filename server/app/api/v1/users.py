@@ -30,12 +30,12 @@ def register_user(
         return JSONResponse(content={}, status_code=status.HTTP_201_CREATED)
     except exceptions.RecordAlreadyExist as e:
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
+            content={"detail": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
         )
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": "Unexpected Error in registering the user"},
+            content={"detail": "Unexpected Error in registering the user"},
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
@@ -56,10 +56,12 @@ def login_user(
 
     try:
         return user_service.login_user(mysql_session, user_detail)
+    except exceptions.NotAuthorized as e:
+        raise e
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": "Unexpected error in authenticating the user"},
+            content={"detail": "Unexpected error in authenticating the user"},
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
 
@@ -83,5 +85,5 @@ def get_user(
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )

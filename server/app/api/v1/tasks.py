@@ -32,7 +32,7 @@ def create_task(
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -61,12 +61,12 @@ def update_task(
         )
     except exceptions.RecordDoesNotExist as e:
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_404_NOT_FOUND
+            content={"detail": str(e)}, status_code=status.HTTP_404_NOT_FOUND
         )
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -89,12 +89,12 @@ def get_task(
         return task_service.get_task(mysql_session, current_user.id, task_id)
     except exceptions.RecordDoesNotExist as e:
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_404_NOT_FOUND
+            content={"detail": str(e)}, status_code=status.HTTP_404_NOT_FOUND
         )
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -117,7 +117,7 @@ def get_all_tasks(
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
@@ -140,10 +140,10 @@ def delete_task(
         task_service.delete_task(mysql_session, current_user.id, task_id)
     except exceptions.RecordDoesNotExist as e:
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_404_NOT_FOUND
+            content={"detail": str(e)}, status_code=status.HTTP_404_NOT_FOUND
         )
     except Exception as e:
         logger.error(e)
         return JSONResponse(
-            content={"error": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": str(e)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
