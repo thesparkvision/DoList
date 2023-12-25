@@ -1,8 +1,9 @@
 import { Box, Button, Card, FormControl, FormLabel, Input, Text } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { failedNotification, successNotification } from "../lib/Utils";
 import { BACKEND_URLS } from "../lib/Constants";
+import { AppContext } from "../context/AppContext";
 import "./LoginPage.scss"
 
 interface FormData {
@@ -16,6 +17,8 @@ const initialFormData: FormData = {
 };
 
 function LoginPage() {
+    const { authentication } = useContext(AppContext);
+    const [, setAuthenticated] = authentication;
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState<FormData>(initialFormData)
@@ -51,18 +54,19 @@ function LoginPage() {
 
             return response.json()
         }).then(data => {
-            if(data.access_token){
-                localStorage.setItem("API_TOKEN", data.access_token)
-            }
+            if(!data.access_token)
+                return
 
             successNotification({
                 title: "Account Authenticated Successfully! Redirecting to home page...",
-                duration: 8000
+                duration: 5000
             })
 
             setTimeout(() => {
+                localStorage.setItem("API_TOKEN", data.access_token)
+                setAuthenticated(true)
                 navigate('/')
-            }, 3000);
+            }, 2000);
         }).catch((error) => {
             failedNotification({
                 title: "Something went wrong with user authentication!",
