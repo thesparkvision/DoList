@@ -1,13 +1,12 @@
 import { Box, Flex, Link, Image, Stack } from "@chakra-ui/react";
 import DoListLogo from "../assets/doListLogo.svg"
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import useAppContext from "../hooks/useAppContext";
 import { utilityNotification } from "../lib/Utils";
 import "./Header.scss"
 
 function Header() {
-    const { authentication } = useContext(AppContext);
-    const [isAuthenticated, setAuthenticated] = authentication;
+    const {authentication} = useAppContext()
+    const [isAuthenticated, setAuthenticated] = authentication || {};
 
     const handleLogout = () => {
         utilityNotification({
