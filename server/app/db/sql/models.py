@@ -76,8 +76,8 @@ class Task(BaseModel):
     __tablename__ = "task"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String(100), nullable=False)
-    description = Column(String(300))
+    title = Column(String(200), nullable=False)
+    description = Column(String(600))
     status = Column(Enum(StatusEnum, name="task_status"), default=StatusEnum.TO_DO)
     priority = Column(
         Enum(PriorityEnum, name="task_priority"), default=PriorityEnum.HIGH
