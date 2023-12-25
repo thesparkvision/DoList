@@ -13,6 +13,9 @@ https://poetic-gnome-a50aea.netlify.app/
 You can view the database diagram for this web app here:
 https://dbdocs.io/amanpandya712/DoList
 
+## Setting Up Project
+Both [Client](https://github.com/thesparkvision/DoList/tree/main/client) and [Server](https://github.com/thesparkvision/DoList/tree/main/server) Directory contain their separate Readme for setting up the project in local.
+
 ## Setting up Dbdocs
 This link can be referred for dbdocs commands:
 https://dbdocs.io/docs
