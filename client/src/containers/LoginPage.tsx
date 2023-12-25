@@ -1,9 +1,9 @@
 import { Box, Button, Card, FormControl, FormLabel, Input, Text } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { failedNotification, successNotification } from "../lib/Utils";
 import { BACKEND_URLS } from "../lib/Constants";
-import { AppContext } from "../context/AppContext";
+import useAppContext from "../hooks/useAppContext";
 import "./LoginPage.scss"
 
 interface FormData {
@@ -17,7 +17,7 @@ const initialFormData: FormData = {
 };
 
 function LoginPage() {
-    const { authentication } = useContext(AppContext);
+    const { authentication } = useAppContext();
     const [, setAuthenticated] = authentication;
     const navigate = useNavigate()
 

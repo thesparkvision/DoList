@@ -7,5 +7,5 @@ export interface ChildrenProps {
 export type ButtonInteractionEvent = React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>;
 
 export type AppContextValue = {
-    "authentication": [boolean, Dispatch<SetStateAction<boolean>>];
+    authentication: [boolean, Dispatch<SetStateAction<boolean>>];
 };
