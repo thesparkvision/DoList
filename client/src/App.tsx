@@ -7,8 +7,9 @@ import HomePage from "./containers/HomePage";
 import SignupPage from "./containers/SignupPage";
 import LoginPage from "./containers/LoginPage";
 import LandingPage from "./containers/LandingPage";
-import checkIsUserAuthenticated from "./hooks/auth";
+import checkIsUserAuthenticated from "./lib/Auth";
 import { ChildrenProps } from "./types";
+import { AppProvider } from "./context/AppContext";
 import './App.scss'
 
 const AppContent: React.FC<ChildrenProps> = ({children}) => {
@@ -50,9 +51,10 @@ function App() {
       aria-labelledby="app-wrapper"
       id="app-wrapper"
     >
-      <Header />
-      <AppContent>
-        <Router basename={"/"}>
+      <Router basename={"/"}>
+        <AppProvider>
+          <Header />
+          <AppContent>
             <Routes>
               <Route path="/auth">
                 <Route path="signup" Component={SignupPage} />
@@ -67,9 +69,10 @@ function App() {
 
               <Route path="*" Component={PageNotFound} />
             </Routes>
-        </Router>
-      </AppContent>
-      <Footer />
+          </AppContent>
+          <Footer />
+        </AppProvider>
+      </Router>
     </div>
   )
 }
