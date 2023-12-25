@@ -48,7 +48,7 @@ function SignupPage() {
         ).then((response) => {
             if (!response.ok) {
                 return response.json().then(errorData => {
-                    throw { status: response.status, errorData };
+                    throw { status: response.status, detail: errorData?.detail };
                 });
             }
 
@@ -64,7 +64,7 @@ function SignupPage() {
         }).catch((error) => {
             failedNotification({
                 title: "Something went wrong with account creation!",
-                description: `HTTP Status: ${error.status}`
+                description: error?.detail
             })
         })
     }
