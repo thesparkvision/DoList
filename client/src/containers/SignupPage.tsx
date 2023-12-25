@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Text, FormLabel, FormControl, Card } from "@chakra-ui/react"
+import { Box, Button, Input, Text, FormLabel, FormControl, Card, Tooltip, Spinner } from "@chakra-ui/react"
 import { BACKEND_URLS } from "../lib/Constants";
 import { failedNotification, successNotification } from "../lib/Utils";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ function SignupPage() {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState<FormData>(initialFormData)
+    const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target
@@ -29,6 +30,8 @@ function SignupPage() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault()
+
+        setIsSubmitBtnDisabled(true)
 
         const requestPayload = {
             "full_name": formData.fullName,
@@ -53,19 +56,20 @@ function SignupPage() {
             }
 
             successNotification({
-                title: "Account Created Successfully! Redirecting to login page...",
-                duration: 8000
+                title: "Account Created Successfully! Redirecting to login page..."
             })
 
             setTimeout(() => {
                 navigate('/auth/login')
-            }, 3000);
+            }, 2000);
 
         }).catch((error) => {
             failedNotification({
                 title: "Something went wrong with account creation!",
                 description: error?.detail
             })
+        }).finally(() => {
+            setIsSubmitBtnDisabled(false)
         })
     }
 
@@ -131,13 +135,16 @@ function SignupPage() {
                     </FormControl>
                     <br />
 
-                    <Button
-                        id="submitBtn"
-                        type="submit"
-                        colorScheme='teal'
-                    >
-                        Submit
-                    </Button>
+                    <Tooltip label="API call is going on" isDisabled={!isSubmitBtnDisabled}>
+                        <Button
+                            id="submitBtn"
+                            type="submit"
+                            colorScheme='teal'
+                            isDisabled={isSubmitBtnDisabled}
+                        >
+                            Submit &nbsp; {isSubmitBtnDisabled && <Spinner />}
+                        </Button>
+                    </Tooltip>
                 </form>
             </Card>
         </Box>
