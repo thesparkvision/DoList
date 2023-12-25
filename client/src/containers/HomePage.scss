@@ -1,6 +1,43 @@
 #homePage {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     padding: 1em;
     text-align: center;
+
+    #homePage-header {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    #noTaskCard {
+        height: 100%;
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+        row-gap: 0.5em;
+    }
+
+    .taskCard {
+        border-radius: 0px;
+
+        .taskCard-body {
+            padding: 0.5em;
+            display: flex;
+            column-gap: 1em;
+            align-items: center;
+            border-radius: 0px;
+
+            .taskCard-priority {
+                min-width: 5em;
+                display: flex; 
+                justify-content: center; 
+                text-transform: uppercase;
+            }
+
+            .taskCard-title {
+                flex: 1;
+                text-align: left;
+            }
+        }
+    }
 }
