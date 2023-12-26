@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Input, Text, FormLabel, FormControl, Card, Tooltip, Spinner } from "@chakra-ui/react"
-import { BACKEND_URLS } from "../lib/Constants";
+import { BACKEND_URLS, FRONTEND_PAGE_URLS } from "../lib/Constants";
 import { failedNotification, successNotification } from "../lib/Utils";
 import { useNavigate } from "react-router-dom";
 import "./SignupPage.scss"
@@ -60,7 +60,7 @@ function SignupPage() {
             })
 
             setTimeout(() => {
-                navigate('/auth/login')
+                navigate(FRONTEND_PAGE_URLS.LOGIN_PAGE)
             }, 2000);
 
         }).catch((error) => {

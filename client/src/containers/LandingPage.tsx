@@ -1,17 +1,18 @@
 import { Box, Button, Flex, Image, Stack, Text } from "@chakra-ui/react"
 import landingPagePic from "../assets/landingPagePic.jpg"
 import { useNavigate } from "react-router-dom";
+import { FRONTEND_PAGE_URLS } from "../lib/Constants";
 import "./LandingPage.scss"
 
 function LandingPage(){
     const navigate = useNavigate()
 
     const goToSignupPage = (): void => {
-        navigate('/auth/signup')
+        navigate(FRONTEND_PAGE_URLS.SIGNUP_PAGE)
     }  
     
     const goToLoginPage = (): void =>{
-        navigate('/auth/login')
+        navigate(FRONTEND_PAGE_URLS.LOGIN_PAGE)
     }  
 
     return  (

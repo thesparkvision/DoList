@@ -11,6 +11,7 @@ import checkIsUserAuthenticated from "./lib/Auth";
 import { ChildrenProps } from "./types";
 import { AppProvider } from "./context/AppContext";
 import './App.scss'
+import { FRONTEND_PAGE_URLS } from "./lib/Constants";
 
 const AppContent: React.FC<ChildrenProps> = ({children}) => {
   return (
@@ -61,7 +62,7 @@ function App() {
                 <Route path="login" Component={LoginPage} />
               </Route>
 
-              <Route path="/" element={<SpecialHomePageRoute />} />
+              <Route path={FRONTEND_PAGE_URLS.HOME_PAGE} element={<SpecialHomePageRoute />} />
 
               <Route element={<PrivateRoute />}>
                 {/* TODO: Add Private routes here */ }
