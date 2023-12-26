@@ -2,6 +2,7 @@ import { Box, Flex, Link, Image, Stack } from "@chakra-ui/react";
 import DoListLogo from "../assets/doListLogo.svg"
 import useAppContext from "../hooks/useAppContext";
 import { utilityNotification } from "../lib/Utils";
+import { FRONTEND_PAGE_URLS } from "../lib/Constants";
 import "./Header.scss"
 
 function Header() {
@@ -31,7 +32,7 @@ function Header() {
             id="header"
         >
             <Box>
-                <Link href="/">
+                <Link href={FRONTEND_PAGE_URLS.HOME_PAGE}>
                     <Image 
                         src={DoListLogo} 
                         alt="Logo" 
@@ -42,12 +43,12 @@ function Header() {
             </Box>
             
             <Stack flexDirection={"row"}>
-                <Link mx="2" href="/" color="gold">Home</Link>
+                <Link mx="2" href={FRONTEND_PAGE_URLS.HOME_PAGE} color="gold">Home</Link>
                 
                 {!isAuthenticated && (
                     <>
-                        <Link mx="2" href="/auth/signup" color="gold">Signup</Link>
-                        <Link mx="2" href="/auth/login" color="gold">Login</Link>    
+                        <Link mx="2" href={FRONTEND_PAGE_URLS.SIGNUP_PAGE} color="gold">Signup</Link>
+                        <Link mx="2" href={FRONTEND_PAGE_URLS.LOGIN_PAGE} color="gold">Login</Link>    
                     </>
                 )}
                 

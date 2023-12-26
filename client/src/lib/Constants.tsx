@@ -4,7 +4,7 @@ export const BACKEND_URLS: Record<string, string> = {
     SIGNUP_URL: API_URL + "/api/v1/users/register",
     LOGIN_URL: API_URL + "/api/v1/users/login",
     GET_USER_URL: API_URL + "/api/v1/users/me",
-    TASK_PAGE_URL: API_URL + "/api/v1/tasks"
+    TASK_PAGE_URL: API_URL + "/api/v1/tasks/"
 }
 
 export const FRONTEND_PAGE_URLS: Record<string, string> = {
