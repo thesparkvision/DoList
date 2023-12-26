@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 
 from app.db.sql.models import User, UserToken, Task
 from app.schemas.tasks import TaskRequestSchema
@@ -65,7 +66,7 @@ def get_all_user_tasks(session: Session, user_id: int) -> list[Task]:
     Gets all user task from task table.
     """
 
-    return session.query(Task).filter(Task.user_id == user_id).all()
+    return session.query(Task).filter(Task.user_id == user_id).order_by(desc(Task.created_at)).all()
 
 
 def delete_user_task(session: Session, task_to_delete: Task) -> None:

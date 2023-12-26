@@ -2,6 +2,8 @@ import { Box, Card, CardBody, Flex, IconButton, Image, Input, InputGroup, InputR
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons'
 import placeHolderPic from "../assets/placeholderPic.png"
 import { BACKEND_URLS, PRIORITY_VALUES, STATUS_VALUES } from "../lib/Constants";
+import { ChangeEventHandler, useEffect, useState } from "react";
+import { failedNotification, successNotification } from "../lib/Utils";
 import "./HomePage.scss"
 
 type TaskItem = {
@@ -9,109 +11,144 @@ type TaskItem = {
     status: string;
     priority: string;
     title: string;
+    description?: string;
+    due_date?: Date | null;
+    completion_date?: Date | null;
 };
 
 type TaskItemProps = {
     task: TaskItem;
+    fetchTasks: Function;
 };
 
 type TaskItemsProps = {
     tasks: TaskItem[];
+    fetchTasks: Function;
 }
 
-const tasks: TaskItem[] = [
-    {
-        "id": 1,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 2,
-        "priority": "LOW",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 3,
-        "priority": "HIGH",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 4,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 5,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 6,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 7,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 8,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 9,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    },
-    {
-        "id": 10,
-        "priority": "CRITICAL",
-        "status": "TO_DO",
-        "title": "View a summary of all your customers over the last month."
-    }
-]
+type CreateTaskBoxProps = {
+    fetchTasks: Function;
+}
 
 function HomePage() {
+    const [currentTasks, setCurrentTasks] = useState<TaskItem[]>([])
+
+    const fetchTasks = async () => {
+        try {
+            const API_TOKEN = localStorage.getItem("API_TOKEN")
+            const response = await fetch(BACKEND_URLS.TASK_PAGE_URL, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${API_TOKEN}`
+                },
+            }
+            );
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw {detail: data.detail}
+            }
+    
+            setCurrentTasks(data);
+        } catch (error) {
+          console.error('Error:', (error as { detail: string }).detail);
+        }
+    };
+    
+    useEffect(() => {
+        fetchTasks();
+    }, []); 
+
     return (
         <Box id="homePage">
-            <CreateTaskBox />
+            <CreateTaskBox fetchTasks={fetchTasks} />
             <br />
 
             <Text fontSize="lg" id="homePage-header">Tasks</Text>
             <br />
             
-            {tasks.length == 0 && <NoTaskCard />}
+            {currentTasks.length == 0 && <NoTaskCard />}
 
-            {tasks.length > 0 && <TaskItems tasks={tasks} />}
+            {currentTasks.length > 0 && (
+                <TaskItems tasks={currentTasks} fetchTasks={fetchTasks} />
+            )}
         </Box>
     )
 }
 
-export const CreateTaskBox = () => {
+export const CreateTaskBox: React.FC<CreateTaskBoxProps> = ({fetchTasks}) => {
+    const [newTaskTitle, setNewTaskTitle] = useState<string>("")
+    const [isSubmitBtnDisabled, setIsSubmitBtnDisabled] = useState(false);
+
     const handleSubmitTask = () => {
-        console.log("Creating new task!")
+        setIsSubmitBtnDisabled(true)
+
+        const requestPayload = {
+            "title": newTaskTitle
+        }
+
+        const API_TOKEN = localStorage.getItem("API_TOKEN")
+        fetch(BACKEND_URLS.TASK_PAGE_URL,
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${API_TOKEN}`
+                },
+                body: JSON.stringify(requestPayload)
+            }
+        ).then((response) => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw { status: response.status, detail: errorData?.detail };
+                });
+            }
+
+            successNotification({
+                title: "New Task Added!"
+            })
+
+            setNewTaskTitle("")
+            fetchTasks()
+        }).catch((error) => {
+            failedNotification({
+                title: "Something went wrong with task creation!",
+                description: error?.detail
+            })
+        }).finally(() => {
+            setIsSubmitBtnDisabled(false)
+        })
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSubmitTask()
+        }
+    };
+
+    const updateNewTaskTitle: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const titleValue: string = event.target.value
+        setNewTaskTitle(titleValue)
     }
 
     return (
         <Flex justifyContent={"space-between"}>
             <InputGroup>
-                <Input maxLength={200} placeholder='Enter your task' />
+                <Input 
+                    maxLength={200} 
+                    placeholder='Enter your task' 
+                    value={newTaskTitle}
+                    onChange={updateNewTaskTitle}
+                    onKeyDown={handleKeyDown}
+                />
+
                 <InputRightElement>
                     <IconButton
                         colorScheme='transparent'
                         aria-label='create task'
                         onClick={handleSubmitTask}
+                        isDisabled={isSubmitBtnDisabled}
                         icon={
                             <CheckIcon color="green" />
                         }
@@ -131,19 +168,39 @@ export const NoTaskCard = () => {
     )
 }
 
-export const TaskItems: React.FC<TaskItemsProps> = ({tasks}) => {
+export const TaskItems: React.FC<TaskItemsProps> = ({tasks, fetchTasks}) => {
     return (
         <List>
             {tasks.map((task) =>
-                <TaskItem key={task.id} task={task} />
+                <TaskItem key={task.id} task={task} fetchTasks={fetchTasks} />
             )}
         </List>
     )
 }
 
-export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
-    const handleTaskDeletion = () => {
-        console.log(`Task ${task.id} Deleted!`)
+export const TaskItem: React.FC<TaskItemProps> = ({ task, fetchTasks }) => {
+
+    const handleDeleteTask = () => {
+        const API_TOKEN = localStorage.getItem("API_TOKEN")
+        fetch(BACKEND_URLS.TASK_PAGE_URL + `${task.id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_TOKEN}`
+            },
+        }).then((response) => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw { status: response.status, detail: errorData?.detail };
+                });
+            }
+            fetchTasks()
+        }).catch((error) => {
+            failedNotification({
+                title: "Something went wrong with task deletion!",
+                description: error?.detail
+            })
+        })
     }
 
     return (
@@ -188,7 +245,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                         <IconButton 
                             aria-label="delete-task-btn" 
                             icon={<DeleteIcon/>} 
-                            onClick={handleTaskDeletion}
+                            onClick={handleDeleteTask}
                         />
                     </CardBody>
                 </Card>
