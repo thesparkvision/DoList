@@ -203,6 +203,38 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, fetchTasks }) => {
         })
     }
 
+    const handlePatchTask = (status: string) => {
+        const requestPayload = {
+            "status": status
+        }
+
+        const API_TOKEN = localStorage.getItem("API_TOKEN")
+        fetch(BACKEND_URLS.TASK_PAGE_URL + `${task.id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_TOKEN}`
+            },
+            body: JSON.stringify(requestPayload)
+        }).then((response) => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw { status: response.status, detail: errorData?.detail };
+                });
+            }
+        }).catch((error) => {
+            failedNotification({
+                title: "Something went wrong with task updation!",
+                description: error?.detail
+            })
+        })
+    }
+
+    const updateTaskStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const status = event.target.value
+        handlePatchTask(status)
+    }
+
     return (
         <ListItem>
             <LinkBox as='article'>
@@ -234,6 +266,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, fetchTasks }) => {
                             placeholder='Select status'
                             bg={STATUS_VALUES[task.status].color}
                             defaultValue={task.status}
+                            onChange={updateTaskStatus}
                         >
                             {Object.values(STATUS_VALUES).map(statusObject =>  
                                 <option key={statusObject.value} value={statusObject.value}>

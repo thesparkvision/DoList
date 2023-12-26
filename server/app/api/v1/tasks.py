@@ -44,7 +44,7 @@ def create_task(
 )
 def update_task(
     task_id: int,
-    task_detail: task_schema.TaskRequestSchema,
+    task_detail: task_schema.TaskUpdateRequestSchema,
     current_user=Depends(auth.get_current_active_user),
     mysql_session: Session = Depends(get_db_session),
 ) -> task_schema.TaskResponseSchema:
