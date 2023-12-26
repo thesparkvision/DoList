@@ -51,3 +51,11 @@ class TaskResponseSchema(BaseModel):
     priority: PriorityEnum | None
     due_date: date | None
     completion_date: date | None
+
+class TaskUpdateRequestSchema(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    status: StatusEnum | None = None
+    priority: PriorityEnum | None = None
+    due_date: date | None = None
+    completion_date: date | None = None

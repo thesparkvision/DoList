@@ -86,10 +86,10 @@ def update_user_task(
     """
 
     for field, value in task_detail.dict().items():
-        if field in {"status", "priority"} and value is None:
-            continue
-
-        setattr(task_to_update, field, value)
+        if field in {"due_date", "completion_date"} and value is None:
+            setattr(task_to_update, field, value)
+        elif value is not None:
+            setattr(task_to_update, field, value)
 
     session.commit()
 
