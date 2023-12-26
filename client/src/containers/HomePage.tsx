@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, Flex, IconButton, Image, Input, InputGroup, InputRightElement, LinkBox, LinkOverlay, List, ListItem, Select, Tag, TagRightIcon, Text, Textarea } from "@chakra-ui/react"
+import { Box, Card, CardBody, Flex, IconButton, Image, Input, InputGroup, InputRightElement, LinkBox, LinkOverlay, List, ListItem, Select, Tag, Text } from "@chakra-ui/react"
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons'
 import placeHolderPic from "../assets/placeholderPic.png"
 import { BACKEND_URLS, PRIORITY_VALUES, STATUS_VALUES } from "../lib/Constants";
@@ -18,16 +18,16 @@ type TaskItem = {
 
 type TaskItemProps = {
     task: TaskItem;
-    fetchTasks: Function;
+    fetchTasks: () => void;
 };
 
 type TaskItemsProps = {
     tasks: TaskItem[];
-    fetchTasks: Function;
+    fetchTasks: () => void;
 }
 
 type CreateTaskBoxProps = {
-    fetchTasks: Function;
+    fetchTasks: () => void;
 }
 
 function HomePage() {
